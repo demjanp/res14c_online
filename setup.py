@@ -21,7 +21,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="res14c_online",
-    version="0.9",
+    version="1.0",
     description="Radiocarbon Dating Resolution Calculator - Online",
     long_description=long_description,
     long_description_content_type="text/markdown",
