@@ -44,7 +44,7 @@
 	const exportButton = document.getElementById("exportButton");
 	const plotContainer = document.getElementById("plotContainer");
 	const loadingIndicator = document.getElementById("loading-indicator");
-
+	
 	let chart = 0;
 	let filteredData = 0
 	let csvBlob; // Declare the blob variable outside the function
@@ -102,7 +102,7 @@
 		if (chart !== 0) {
 			chart.destroy();
 		}
-
+		
 		chart = new Chart(plotContainer, {
 			type: 'line',
 			data: chartData,
