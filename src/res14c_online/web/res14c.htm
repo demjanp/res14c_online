@@ -28,6 +28,9 @@
 		float: left;
 		margin-right: 10px;
 	}
+	#resultControls {
+		display: none;
+	}
 	</style>
 </head>
 <body>
@@ -46,8 +49,10 @@
 		<div id="loading-indicator" style="display: none;">Loading...</div>
 		<canvas id="plotContainer" style="display: none; background-color: white;"></canvas>
 	</div>
-	<button id="exportButton" style="display: none;">Download Data (CSV)</button>
-	<p><a id="resultLink" href="#">Link to result</a></p>
+	<div id="resultControls">
+		<button id="exportButton" style="display: none;">Download Data (CSV)</button>
+		<p><a id="resultLink" href="#">Link to Result</a></p>
+	</div>
 </div>
 <div id="explanation-box">
 	<h3>Example Use:</h3>
@@ -65,7 +70,7 @@
 	<h3>Interpreting the Data:</h3>
 	<p>For the given age range (1050-950 BC), the graph shows that the dating uncertainty ranges (2-sigma or 95.45% confidence interval) vary between approximately 100 and 190 years.</p>
 	<p>Statistically (according to a binomial probability model), if we were to date 20 samples from this period, we can expect 18 of them to have a dating uncertainty range of 190 years or less. To have a 90% chance of obtaining at least one sample with a range of 100 years or less, we need to date at least 22 samples.</p>
-	<p>In general, <strong>18 out of 20 dated samples</strong> will have a dating uncertainty range at the <strong>upper bound</strong> of the 90% confidence interval, and to have a 90% chance of obtaining at least one sample with a range at the <strong>lower bound</strong>, you would need to date <strong>at least 22 samples</strong>.</p>
+	<p>In general, <strong>18 out of 20 dated samples</strong> will have a dating uncertainty range at the <strong>upper bound</strong> of the 90% confidence interval, and to have a 90% chance of obtaining at least one sample with a range at the <strong>lower bound</strong>, we would need to date <strong>at least 22 samples</strong>.</p>
 </div>
 <p>Project home: <a href="https://github.com/demjanp/res14c_online">https://github.com/demjanp/res14c_online</a> (Python script used to generate the data as well as the full open source code).</p>
 <p>For an overview of the method see: Svetlik et al. (2019) <a href="https://doi.org/10.1017/RDC.2019.134">DOI: 10.1017/RDC.2019.134</a>.</p>
@@ -95,6 +100,10 @@
 	const exportButton = document.getElementById("exportButton");
 	const plotContainer = document.getElementById("plotContainer");
 	const loadingIndicator = document.getElementById("loading-indicator");
+	
+	function showLinks() {
+		document.getElementById('resultControls').style.display = 'block';
+	}
 	
 	let chart = 0;
 	let filteredData = 0
@@ -191,6 +200,8 @@
 		const csvContent = filteredData.map(row => row.join(";")).join("\n");
 		const combinedData = headerRow + csvContent;
 		csvBlob = new Blob([combinedData], { type: 'text/csv;charset=utf-8' });
+		
+		showLinks();
 	});
 
 	exportButton.addEventListener('click', () => {
