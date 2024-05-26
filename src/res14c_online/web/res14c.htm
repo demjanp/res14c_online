@@ -24,23 +24,30 @@
 	#explanation-box h3 {
 		color: black;
 	}
+	.input-form form {
+		float: left;
+		margin-right: 10px;
+	}
 	</style>
 </head>
 <body>
 <h2>Radiocarbon Dating Resolution Calculator</h2>
 <p>Calculate expected temporal resolution of radiocarbon dating based on the expected actual age of the samples.</p>
-<div style="border: 1px solid grey; padding: 10px; margin: 10px;">
+<div class="input-form" style="border: 1px solid grey; padding: 10px; margin: 10px;">
 	<p><span style="font-weight: bold;">Enter sample age</span> (in years AD, use negative values for BC):</p>
+	<form oninput="updateLink()">
 	<label for="lowerBound">Minimum:</label>
 	<input id="lowerBound" type="number" value="-18000">
 	<label for="upperBound">Maximum:</label>
 	<input id="upperBound" type="number" value="1950">
+	</form>
 	<button id="plotButton">Plot</button>
 	<div style="padding: 10px; margin: 10px;">
 		<div id="loading-indicator" style="display: none;">Loading...</div>
-		<canvas id="plotContainer" style="display: none;"></canvas>
+		<canvas id="plotContainer" style="display: none; background-color: white;"></canvas>
 	</div>
 	<button id="exportButton" style="display: none;">Download Data (CSV)</button>
+	<p><a id="resultLink" href="#">Link to result</a></p>
 </div>
 <div id="explanation-box">
 	<h3>Example Use:</h3>
@@ -66,6 +73,22 @@
 <p>Radiocarbon dates are calibrated using atmospheric data from the IntCal20 dataset by: Reimer et al. (2016) <a href="https://doi.org/10.2458/azu_js_rc.55.16947">DOI: 10.2458/azu_js_rc.55.16947</a></p>
 <p>Development of this software was supported by project OP JAC "Ready for the future: understanding long-term resilience of the human culture (RES-HUM)", Reg. No. CZ.02.01.01/00/22_008/0004593 of the Ministry of Education, Youth, and Sports of the Czech Republic and EU.</p>
 <script>
+	function getQueryParams() {
+		const params = {};
+		window.location.search.substr(1).split('&').forEach(pair => {
+			const [key, value] = pair.split('=');
+			params[decodeURIComponent(key)] = decodeURIComponent(value);
+		});
+		return params;
+	}
+	const queryParams = getQueryParams();
+	if (queryParams.lowerBound) {
+		document.getElementById('lowerBound').value = queryParams.lowerBound;
+	}
+	if (queryParams.upperBound) {
+		document.getElementById('upperBound').value = queryParams.upperBound;
+	}
+	
 	const lowerBoundInput = document.getElementById("lowerBound");
 	const upperBoundInput = document.getElementById("upperBound");
 	const plotButton = document.getElementById("plotButton");
@@ -174,6 +197,19 @@
 		const fileName = 'c14_resolution_export.csv';
 		saveAs(csvBlob, fileName);  // Use FileSaver.js to save the blob
 	});
+	
+	if (queryParams.lowerBound && queryParams.upperBound) {
+		plotButton.click();
+	}
+	
+	function updateLink() {
+		var lowerBound = document.getElementById('lowerBound').value;
+		var upperBound = document.getElementById('upperBound').value;
+		var link = `https://arch14.aiscr.cz/?page=res14c&lowerBound=${lowerBound}&upperBound=${upperBound}`;
+		document.getElementById('resultLink').href = link;
+		document.getElementById('resultLink').innerText = "Link to result";
+	}
+	updateLink();
 </script>
 </body>
 </html>
