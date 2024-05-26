@@ -14,6 +14,16 @@
 		text-align: center; /* Center text within the element */
 		background-color: white;
 	}
+	#explanation-box {
+		border: 1px solid black;
+		background-color: white;
+		color: black;
+		padding: 10px; margin: 10px;
+		font-size: 90%;
+	}
+	#explanation-box h3 {
+		color: black;
+	}
 	</style>
 </head>
 <body>
@@ -31,6 +41,24 @@
 		<canvas id="plotContainer" style="display: none;"></canvas>
 	</div>
 	<button id="exportButton" style="display: none;">Download Data (CSV)</button>
+</div>
+<div id="explanation-box">
+	<h3>Example Use:</h3>
+	<p>Let's say we want to know the expected dating resolution for samples with an actual age around 1000 BC. Here's how we can do it:</p>
+	<ol>
+		<li><strong>Enter Age Range:</strong> In the "Enter sample age" section, input -1050 as the minimum value and -950 as the maximum value. These correspond to 1050 BC and 950 BC.</li>
+		<li><strong>Plot the Data:</strong> Click the "Plot" button.</li>
+	</ol>
+	<h3>Understanding the Results:</h3>
+	<ul>
+		<li>The resulting graph will show the resolution of radiocarbon dating for this age range.</li>
+		<li>The grey shaded area represents the 90% confidence interval, indicating the range within which we can expect most of our dates to fall.</li>
+		<li>The black line represents the mean resolution.</li>
+	</ul>
+	<h3>Interpreting the Data:</h3>
+	<p>For the given age range (1050-950 BC), the graph shows that the dating uncertainty ranges (2-sigma or 95.45% confidence interval) vary between approximately 100 and 190 years.</p>
+	<p>Statistically (according to a binomial probability model), if we were to date 20 samples from this period, we can expect 18 of them to have a dating uncertainty range of 190 years or less. To have a 90% chance of obtaining at least one sample with a range of 100 years or less, we need to date at least 22 samples.</p>
+	<p>In general, <strong>18 out of 20 dated samples</strong> will have a dating uncertainty range at the <strong>upper bound</strong> of the 90% confidence interval, and to have a 90% chance of obtaining at least one sample with a range at the <strong>lower bound</strong>, you would need to date <strong>at least 22 samples</strong>.</p>
 </div>
 <p>Project home: <a href="https://github.com/demjanp/res14c_online">https://github.com/demjanp/res14c_online</a> (Python script used to generate the data as well as the full open source code).</p>
 <p>For an overview of the method see: Svetlik et al. (2019) <a href="https://doi.org/10.1017/RDC.2019.134">DOI: 10.1017/RDC.2019.134</a>.</p>
